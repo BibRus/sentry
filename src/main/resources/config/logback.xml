@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<configuration>
+
+    <property name="CPU_TEMPERATURE_FILE" value="./../logs/cpu/cpu_temperature.log"/>
+    <property name="CPU_VOLTAGE_FILE" value="./../logs/cpu/cpu_voltage.log"/>
+    <property name="CPU_LOAD_FILE" value="./../logs/cpu/cpu_load.log"/>
+    <property name="ROOT_FILE" value="./../logs/sentry.log"/>
+
+    <property name="PATTERN_FOR_FILE" value="%date{yyyy HH:mm:ss} %logger{20} %msg%n"/>
+
+    <appender name="CPU_TEMPERATURE_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${CPU_TEMPERATURE_FILE}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${PATTERN_FOR_FILE}</pattern>
+        </encoder>
+    </appender>
+    <appender name="CPU_VOLTAGE_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${CPU_VOLTAGE_FILE}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${PATTERN_FOR_FILE}</pattern>
+        </encoder>
+    </appender>
+    <appender name="CPU_LOAD_APPENDER" class="ch.qos.logback.core.FileAppender">
+        <file>${CPU_LOAD_FILE}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${PATTERN_FOR_FILE}</pattern>
+        </encoder>
+    </appender>
+    <appender name="ROOT" class="ch.qos.logback.core.FileAppender">
+        <file>${ROOT_FILE}</file>
+        <append>true</append>
+        <encoder>
+            <pattern>${PATTERN_FOR_FILE}</pattern>
+        </encoder>
+    </appender>
+    <logger name="cpuTemperature" level="DEBUG" additivity="false">
+        <appender-ref ref="CPU_TEMPERATURE_APPENDER"/>
+    </logger>
+    <logger name="cpuVoltage" level="DEBUG" additivity="false">
+        <appender-ref ref="CPU_VOLTAGE_APPENDER"/>
+    </logger>
+    <logger name="cpuLoad" level="DEBUG" additivity="false">
+        <appender-ref ref="CPU_LOAD_APPENDER"/>
+    </logger>
+    <logger name="sentry" level="DEBUG" additivity="false">
+        <appender-ref ref="ROOT"/>
+    </logger>
+</configuration>

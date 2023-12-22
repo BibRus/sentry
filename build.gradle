@@ -1,0 +1,76 @@
+import io.github.fvarrui.javapackager.gradle.PackageTask
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'io.github.fvarrui:javapackager:latest.release'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+apply plugin: 'io.github.fvarrui.javapackager.plugin'
+
+group 'com.github'
+version '0.0.8'
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+javafx {
+    version ='17.0.1'
+    modules = ['javafx.controls']
+}
+
+application {
+    mainModule = 'com.github.sentry'
+    mainClass = 'com.github.sentry.SentryLauncher'
+    applicationDefaultJvmArgs = ["-Dsentry.configuration=$buildDir/libs/settings.properties",
+                                 "-Dlogback.configurationFile=$buildDir/libs/logback.xml"]
+}
+
+dependencies {
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'ch.qos.logback:logback-core:1.4.14'
+    implementation 'ch.qos.logback:logback-classic:1.4.14'
+    implementation 'com.github.oshi:oshi-core-java11:6.4.8'
+    implementation ('io.github.mkpaz:atlantafx-base:2.0.1') {
+        transitive = false
+    }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'sentry',
+                'Main-Class': 'com.github.sentry.SentryLauncher'
+    }
+}
+
+tasks.register('packageApplication', PackageTask) {
+    dependsOn build
+    mainClass = 'com.github.sentry.SentryLauncher'
+    bundleJre = true
+    createZipball = true
+    administratorRequired = true
+    generateInstaller = false
+    platform = 'windows'
+    vmArgs =  ['-Dsentry.configuration=./config/settings.properties',
+                                '-Dlogback.configurationFile=./config/logback.xml']
+    assetsDir = file('src/main/resources/assets')
+    additionalResources = [file('src/main/resources/config')]
+
+}
