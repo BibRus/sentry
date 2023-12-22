@@ -1,7 +1,5 @@
 package com.github.sentry.ui;
 
-import javafx.application.Platform;
-import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

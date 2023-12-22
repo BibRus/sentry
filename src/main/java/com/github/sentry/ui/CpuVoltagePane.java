@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import oshi.SystemInfo;
 import javafx.stage.Stage;
 
-import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
